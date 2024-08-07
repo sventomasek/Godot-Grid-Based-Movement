@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Node2D
 
 @export_group("Movement")
 @export_enum("Left", "Right", "None", "Left or Right", "Left or Right or None") var startDirection := "Left or Right"
