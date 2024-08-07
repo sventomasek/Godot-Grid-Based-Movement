@@ -2,6 +2,14 @@ extends Node2D
 
 @export var alive := true
 
+@export_group("Keybinds")
+@export var moveUp := "ui_up"
+@export var moveDown := "ui_down"
+@export var moveLeft := "ui_left"
+@export var moveRight := "ui_right"
+@export var jump := "ui_accept"
+@export var jumpInversed := "ui_accept"
+
 @export_group("Movement")
 @export_enum("Platformer", "Top-Down") var movementType = "Platformer"
 @export var moveDelayUp := 0.5
@@ -35,7 +43,7 @@ func _physics_process(delta):
 		
 	# Horizontal Movement
 	moveDelayX_ -= delta
-	var direction = Input.get_axis("move_left", "move_right")
+	var direction = Input.get_axis(moveLeft, moveRight)
 	
 	if direction > 0: move_x(1)
 	elif direction < 0: move_x(-1)
@@ -59,18 +67,18 @@ func _physics_process(delta):
 			
 		# Jumping and falling
 		if isOnFloor: 
-			if inverseGravity && Input.is_action_just_pressed("jump_inversed"): start_jump()
-			elif !inverseGravity && Input.is_action_just_pressed("jump"): start_jump()
+			if inverseGravity && Input.is_action_just_pressed(jumpInversed): start_jump()
+			elif !inverseGravity && Input.is_action_just_pressed(jump): start_jump()
 			
-		if (inverseGravity && Input.is_action_just_released("jump_inversed")) || jumpTime_ > jumpTime: stop_jump()
-		elif (!inverseGravity && Input.is_action_just_released("jump")) || jumpTime_ > jumpTime: stop_jump()
+		if (inverseGravity && Input.is_action_just_released(jumpInversed)) || jumpTime_ > jumpTime: stop_jump()
+		elif (!inverseGravity && Input.is_action_just_released(jump)) || jumpTime_ > jumpTime: stop_jump()
 		
 		if isOnFloor && !jumping: jumpTime_ = 0
 		
 		if jumping: do_jumping()
 		elif !isOnFloor: falling()
 	elif movementType == "Top-Down":
-		var directionY = Input.get_axis("move_down", "move_up")
+		var directionY = Input.get_axis(moveDown, moveUp)
 		if directionY > 0: move_y(-1)
 		elif directionY < 0: move_y(1)
 		
