@@ -11,7 +11,7 @@ I used these scripts to make my 8x8 platformer game! But it also has an option f
 4. On your TileSet in the Inspector add a Custom Data Layer "walkable" type bool
 5. Now every tile you place should act as a wall by default, if you want some to not you will need to go to your TileSet and set Custom Data "walkable" to true on each one
 6. Add the Player.gd script to your Player Node
-7. Configure the settings to your liking
+7. Configure the settings to your liking (especially the Keybinds section!)
 8. Play
 
 # How to add Enemies
