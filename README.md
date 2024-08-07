@@ -23,5 +23,6 @@ I used these scripts to make my 8x8 platformer game! But it also has an option f
 1. Add your Player Node to a group called "Player" and enemies to a group called "Enemy"
 2. Add an Area2D with a CollisionShape2D
 3. Add the GravityInverser.gd script to it
-4. Configure the settings to your liking
-5. Now when the player or an enemy touch it they will fall in the opposite direction!
+4. Connect the on_body_entered signal of Area2D to itself
+5. Configure the settings to your liking
+6. Now when the player or an enemy touch it they will fall in the opposite direction!
