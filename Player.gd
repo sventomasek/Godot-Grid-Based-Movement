@@ -19,7 +19,6 @@ var jumpTime_: float
 var jumping: bool
 var isOnFloor: bool
 
-@onready var deathScreen = get_tree().get_first_node_in_group("DeathScreen")
 @onready var collision = $CollisionShape2D
 @onready var sprite = $Sprite2D
 @onready var tileMap = %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
@@ -31,9 +30,7 @@ func _physics_process(delta):
 	# Death
 	if alive: deathScreen.visible = false
 	else:
-		if Input.is_action_just_released("jump"): get_tree().reload_current_scene()
-		deathScreen.visible = true
-		collision.disabled = true
+		if collision: collision.disabled = true
 		visible = false
 		return
 		
