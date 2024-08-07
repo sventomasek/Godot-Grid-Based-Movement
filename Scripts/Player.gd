@@ -24,7 +24,6 @@ var moveDelayX_: float
 
 var oldPosition: Vector2
 var newPosition: Vector2
-var doneMoving := true
 
 @export_group("Jumping")
 @export var inverseGravity := false
@@ -107,7 +106,7 @@ func falling():
 	else: move_y(1)
 	
 func move_x(direction: int):
-	if moveDelayX_ > 0 || !doneMoving: return
+	if moveDelayX_ > 0: return
 	
 	var currentTile: Vector2i = tileMap.local_to_map(global_position)
 	var targetTile := Vector2i(currentTile.x + direction, currentTile.y)
@@ -123,7 +122,7 @@ func move_x(direction: int):
 		elif direction < 0: sprite.flip_h = true
 		
 func move_y(direction: int):
-	if moveDelayY_ > 0 || !doneMoving: return
+	if moveDelayY_ > 0: return
 	
 	var currentTile: Vector2i = tileMap.local_to_map(global_position)
 	var targetTile := Vector2i(currentTile.x, currentTile.y + direction)
