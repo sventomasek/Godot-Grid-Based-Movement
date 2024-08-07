@@ -28,8 +28,7 @@ func _ready():
 	
 func _physics_process(delta):
 	# Death
-	if alive: deathScreen.visible = false
-	else:
+	if !alive:
 		if collision: collision.disabled = true
 		visible = false
 		return
