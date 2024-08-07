@@ -1,6 +1,6 @@
 # Godot Grid Based Movement
 Grid based Movement in Godot for both Platformer and Top-Down Games!
-I used these scripts to make my 8x8 platformer game! But it also has an option for Top-Down movement.
+I used these scripts to make my 8x8 platformer game, but it also has an option for Top-Down movement.
 
 Here's an example game of what I made (the tiles don't have to be 1x1):
 <img src="https://raw.githubusercontent.com/sventomasek/Godot-Grid-Based-Movement/main/Example.gif" width="400" />
