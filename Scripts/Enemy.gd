@@ -62,7 +62,6 @@ func _ready():
 	newPosition = tileMap.map_to_local(currentTile)
 	oldPosition = newPosition
 	global_position = newPosition
-	sprite.play("default")
 	
 	randomize_direction()
 	
