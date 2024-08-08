@@ -6,7 +6,9 @@ extends Area2D
 @onready var tileMap = %TileMap
 
 func _ready():
-	global_position = tileMap.map_to_local(global_position)
+	# Center position to a tiles position
+	var currentTile: Vector2i = tileMap.local_to_map(global_position)
+	global_position = tileMap.map_to_local(currentTile)
 	
 func _on_body_entered(body):
 	if body.is_in_group("Player") && inversePlayer:
