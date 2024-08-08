@@ -4,7 +4,7 @@ I used these scripts to make my 8x8 platformer game, but it also has an option f
 
 Here's some examples of what you can make with it:
 <p float="left">
-   <img src="https://raw.githubusercontent.com/sventomasek/Godot-Grid-Based-Movement/main/Images/Example3.gif" width="500" />
+   <img src="https://raw.githubusercontent.com/sventomasek/Godot-Grid-Based-Movement/main/Images/Example3.gif" width="550" />
    <img src="https://raw.githubusercontent.com/sventomasek/Godot-Grid-Based-Movement/main/Images/Example.gif" width="200" />
 </p>
 
