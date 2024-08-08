@@ -17,8 +17,9 @@ Here's an example of what you can make with it:
 
 # How to add Enemies
 1. Add the Enemy.gd script to your Enemy Node
-2. Configure the settings to your liking
-3. Play
+2. Right click on your Player node and select "Access as Unique Name"
+3. Configure the settings to your liking
+4. Play
 
 # How to add Gravity Inversers
 1. Add your Player Node to a group called "Player" and enemies to a group called "Enemy"
