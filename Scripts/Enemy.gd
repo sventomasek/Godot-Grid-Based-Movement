@@ -95,7 +95,6 @@ func _physics_process(delta):
 		var belowTileData: TileData = tileMap.get_cell_tile_data(0, tileMap.local_to_map(global_position) + Vector2i(0, 1))
 		if moveDirectionY < 0 && aboveTileData && !aboveTileData.get_custom_data("walkable"): moveDirectionY = -moveDirectionY
 		if moveDirectionY > 0 && belowTileData && !belowTileData.get_custom_data("walkable"): moveDirectionY = -moveDirectionY
-		print(moveDirectionY)
 		move_y(moveDirectionY)
 		
 func start_jump():
