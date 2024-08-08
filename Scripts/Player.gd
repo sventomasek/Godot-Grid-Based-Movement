@@ -11,8 +11,10 @@ extends Node2D
 @export var jumpInversed := "ui_accept"
 
 @export_group("Movement")
-@export_enum("Platformer", "Top-Down") var movementType = "Platformer"
-@export_enum("None", "Linear", "Move Toward") var interpolation = "None"
+@export var allowMoveIntoEnemy := false
+@export var countMovingIntoWall := false
+@export_enum("Top-Down", "Platformer") var movementType = "Top-Down"
+@export_enum("None", "Linear", "Move Toward") var interpolation = "Linear"
 @export var interpolationSpeed := 5.0
 @export var moveDelayUp := 0.5
 @export var moveDelayDown := 0.5
@@ -24,6 +26,7 @@ var moveDelayX_: float
 
 var oldPosition: Vector2
 var newPosition: Vector2
+var moved = false
 
 @export_group("Jumping")
 @export var inverseGravity := false
@@ -32,15 +35,17 @@ var jumpTime_: float
 var jumping: bool
 var isOnFloor: bool
 
-@onready var collision = $CollisionShape2D
-@onready var sprite = $Sprite2D
-@onready var tileMap = %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
+@onready var collision := $CollisionShape2D
+@onready var sprite := $Sprite2D
+@onready var tileMap := %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
+@onready var enemies := []
 
 func _ready():
 	var currentTile: Vector2i = tileMap.local_to_map(global_position)
 	newPosition = tileMap.map_to_local(currentTile)
 	oldPosition = newPosition
 	global_position = newPosition
+	sprite.play("default")
 	
 func _physics_process(delta):
 	# Death
@@ -51,6 +56,7 @@ func _physics_process(delta):
 		
 	# Movement
 	update_position()
+	if moved: moved = false
 	
 	# Horizontal Movement
 	moveDelayX_ -= delta
@@ -61,9 +67,8 @@ func _physics_process(delta):
 	
 	# Vertical Movement
 	moveDelayY_ -= delta
-	
-	# Check if on floor
 	if movementType == "Platformer":
+		# Check if on floor
 		if inverseGravity:
 			var aboveTileData: TileData = tileMap.get_cell_tile_data(0, tileMap.local_to_map(global_position) + Vector2i(0, -1))
 			isOnFloor = aboveTileData && !aboveTileData.get_custom_data("walkable")
@@ -121,6 +126,14 @@ func move_x(direction: int):
 		if direction > 0: sprite.flip_h = false
 		elif direction < 0: sprite.flip_h = true
 		
+	# Check if the move should register as a move
+	var movedIntoWall := false
+	for layer in tileMap.get_layers_count():
+		var tileData: TileData = tileMap.get_cell_tile_data(layer, tileMap.local_to_map(newPosition))
+		if tileData && !tileData.get_custom_data("walkable"): movedIntoWall = true
+		
+	if countMovingIntoWall || !movedIntoWall: moved = true
+	
 func move_y(direction: int):
 	if moveDelayY_ > 0: return
 	
@@ -132,13 +145,29 @@ func move_y(direction: int):
 	if direction > 0:  moveDelayY_ = moveDelayDown
 	elif direction < 0: moveDelayY_ = moveDelayUp
 	
-func update_position():
-	# Check if next position is inside wall
-	var tileData: TileData = tileMap.get_cell_tile_data(0, tileMap.local_to_map(newPosition))
-	if tileData && !tileData.get_custom_data("walkable"):
-		newPosition = oldPosition
-		return
+	# Check if the move should register as a move
+	var movedIntoWall := false
+	for layer in tileMap.get_layers_count():
+		var tileData: TileData = tileMap.get_cell_tile_data(layer, tileMap.local_to_map(newPosition))
+		if tileData && !tileData.get_custom_data("walkable"): movedIntoWall = true
 		
+	if countMovingIntoWall || !movedIntoWall: moved = true
+	
+func update_position():
+	# Check if next position is inside enemy
+	if !allowMoveIntoEnemy:
+		for enemy in enemies:
+			if newPosition == enemy.oldPosition:
+				newPosition = oldPosition
+				return
+				
+	# Check if next position is inside wall
+	for layer in tileMap.get_layers_count():
+		var tileData: TileData = tileMap.get_cell_tile_data(layer, tileMap.local_to_map(newPosition))
+		if tileData && !tileData.get_custom_data("walkable"):
+			newPosition = oldPosition
+			return
+			
 	# Update Position
 	var delta = get_physics_process_delta_time()
 	oldPosition = newPosition
