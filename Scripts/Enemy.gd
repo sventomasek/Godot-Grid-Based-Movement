@@ -2,6 +2,8 @@ extends Node2D
 
 @export_group("Movement")
 @export var moveWithPlayer := false
+@export var allowMoveIntoPlayer := false
+@export var allowMoveIntoEnemy := false
 @export_enum("Top-Down", "Platformer") var movementType = "Top-Down"
 
 @export_group("Direction")
@@ -176,14 +178,29 @@ func move_y(direction: int):
 	
 	movesDone.y += 1
 	
+func cancel_move():
+	newPosition = oldPosition
+	if randi_range(1, 2) == 1: moveDirectionX *= -1
+	else: moveDirectionY *= -1
+	
 func update_position():
+	# Check if next position is inside player or enemy
+	if !allowMoveIntoEnemy:
+		for enemy in player.enemies:
+			if enemy != self &&  newPosition == enemy.oldPosition:
+				cancel_move()
+				return
+				
+	if !allowMoveIntoPlayer:
+		if newPosition == player.oldPosition:
+			cancel_move()
+			return
+			
 	# Check if next position is inside wall
 	for layer in tileMap.get_layers_count():
 		var tileData: TileData = tileMap.get_cell_tile_data(layer, tileMap.local_to_map(newPosition))
 		if tileData && !tileData.get_custom_data("walkable"):
-			newPosition = oldPosition
-			if randi_range(1, 2) == 1: moveDirectionX *= -1
-			else: moveDirectionY *= -1
+			cancel_move()
 			return
 			
 	# Update Position
