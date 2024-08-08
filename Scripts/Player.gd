@@ -45,7 +45,6 @@ func _ready():
 	newPosition = tileMap.map_to_local(currentTile)
 	oldPosition = newPosition
 	global_position = newPosition
-	sprite.play("default")
 	
 func _physics_process(delta):
 	# Death
