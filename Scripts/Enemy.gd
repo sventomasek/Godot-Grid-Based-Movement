@@ -11,10 +11,12 @@ var moveDirectionY: int
 
 @export var moveDelayUp := 0.5
 @export var moveDelayDown := 0.5
+@export var moveDelayYRandom := 0.5
 var moveDelayY_: float
 
 @export var moveDelayLeft := 0.5
 @export var moveDelayRight := 0.5
+@export var moveDelayXRandom := 0.5
 var moveDelayX_: float
 
 var oldPosition: Vector2
@@ -35,14 +37,15 @@ var jump := false ## Set to true to trigger a jump
 var jumping := false
 var isOnFloor: bool
 
-@onready var sprite = $Sprite2D
-@onready var tileMap = %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
+@onready var sprite := $Sprite2D
+@onready var tileMap := %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
 
 func _ready():
 	var currentTile: Vector2i = tileMap.local_to_map(global_position)
 	newPosition = tileMap.map_to_local(currentTile)
 	oldPosition = newPosition
 	global_position = newPosition
+	sprite.play("default")
 	
 	match startDirectionX:
 		"Left": moveDirectionX = -1
@@ -122,8 +125,8 @@ func move_x(direction: int):
 	
 	oldPosition.x = tileMap.map_to_local(currentTile).x
 	newPosition.x = tileMap.map_to_local(targetTile).x
-	if direction > 0:  moveDelayX_ = moveDelayRight
-	elif direction < 0: moveDelayX_ = moveDelayLeft
+	if direction > 0:  moveDelayX_ = randf_range(moveDelayRight - moveDelayXRandom, moveDelayRight + moveDelayXRandom)
+	elif direction < 0: moveDelayX_ = randf_range(moveDelayLeft - moveDelayXRandom, moveDelayLeft + moveDelayXRandom)
 	
 	# Flip Sprite
 	if sprite:
@@ -138,8 +141,8 @@ func move_y(direction: int):
 	
 	oldPosition.y = tileMap.map_to_local(currentTile).y
 	newPosition.y = tileMap.map_to_local(targetTile).y
-	if direction > 0:  moveDelayY_ = moveDelayDown
-	elif direction < 0: moveDelayY_ = moveDelayUp
+	if direction > 0:  moveDelayY_ = randf_range(moveDelayDown - moveDelayYRandom, moveDelayDown + moveDelayYRandom)
+	elif direction < 0: moveDelayY_ = randf_range(moveDelayUp - moveDelayYRandom, moveDelayUp + moveDelayYRandom)
 	
 func update_position():
 	# Check if next position is inside wall
