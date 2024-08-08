@@ -20,7 +20,7 @@ Here's some examples of what you can make with it:
 
 # How to add Enemies
 1. Add the Enemy.gd script to your Enemy Node
-2. Right click on your Player node and select "Access as Unique Name"
+2. Right click on your Player node and select "Access as Unique Name" (needs to be named "Player")
 3. Configure the settings to your liking
 4. Play
 
