@@ -8,6 +8,8 @@ Here's some examples of what you can make with it:
    <img src="https://raw.githubusercontent.com/sventomasek/Godot-Grid-Based-Movement/main/Images/Example.gif" width="200" />
 </p>
 
+Also a game I made with it: https://sventomasek.itch.io/64-pixels
+
 # How to use
 1. Place the scripts in your Godot project
 2. Make sure your TileMap node is called "TileMap"
