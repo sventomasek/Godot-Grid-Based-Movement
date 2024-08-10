@@ -35,8 +35,8 @@ var jumpTime_: float
 var jumping: bool
 var isOnFloor: bool
 
-@onready var collision := $CollisionShape2D
-@onready var sprite := $Sprite2D
+@onready var collision := get_node_or_null("CollisionShape2D")
+@onready var sprite := get_node_or_null("Sprite2D")
 @onready var tileMap := %TileMap ## Right click on your TileMap and select "Access as Unique name" (make sure the name is TileMap)
 @onready var enemies := []
 
