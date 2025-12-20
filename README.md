@@ -32,8 +32,3 @@ Also a game I made with it: https://sventomasek.itch.io/64-pixels
 4. Connect the on_body_entered signal of Area2D to itself
 5. Configure the settings to your liking
 6. Now when the player or an enemy touch it they will fall in the opposite direction!
-
-# Need Help?
-You can contact me in my Discord server https://discord.gg/MsF7kN54T7
-
-Just post your issue in the "tech-support" channel and I will try to help as soon as I can.
